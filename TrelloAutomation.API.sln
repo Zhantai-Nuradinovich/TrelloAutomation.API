@@ -1,0 +1,99 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.API", "1.API", "{8288CD60-051D-4B25-A513-E6BADE47A20D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloAutomation.API.API", "TrelloAutomation.API\TrelloAutomation.API.API\TrelloAutomation.API.API.csproj", "{882F3B27-2377-4892-97F5-77569E97588D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloAutomation.API.API.Common", "TrelloAutomation.API\TrelloAutomation.API.API.Common\TrelloAutomation.API.API.Common.csproj", "{E1533DA0-7C02-4304-BA14-E52040D5C3B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloAutomation.API.API.DataContracts", "TrelloAutomation.API\TrelloAutomation.API.API.DataContracts\TrelloAutomation.API.API.DataContracts.csproj", "{67D6A055-F138-4005-929C-5CDFC394240E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Tests", "00.Tests", "{57047734-5EFA-4EB7-A0B8-009FF6FEDA30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloAutomation.API.API.Tests.Controllers", "TrelloAutomation.API\TrelloAutomation.API.API.Tests.Controllers\TrelloAutomation.API.API.Tests.Controllers.csproj", "{5AEA4DDB-16B8-4F69-8042-7EE1E42D2553}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloAutomation.API.API.Tests.REST", "TrelloAutomation.API\TrelloAutomation.API.API.Tests.REST\TrelloAutomation.API.API.Tests.REST.csproj", "{5F22E228-1D42-458B-ACAF-CBF9D349690A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Common", "01.Common", "{A2CCCEDC-1C4F-4376-9F7A-2547F0914040}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloAutomation.API.IoC.Configuration", "TrelloAutomation.API\TrelloAutomation.API.IoC.Configuration\TrelloAutomation.API.IoC.Configuration.csproj", "{2109F36E-8D46-48C5-AF94-448D8C44B33F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloAutomation.API.Tools", "TrelloAutomation.API\TrelloAutomation.API.Tools\TrelloAutomation.API.Tools.csproj", "{CCCBB741-D387-4C8C-94A3-3E0848125C45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Services", "2.Services", "{F3957EE1-9D19-42CE-A4CD-318FB2179C3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloAutomation.API.Services", "TrelloAutomation.API\TrelloAutomation.API.Services\TrelloAutomation.API.Services.csproj", "{6458FA94-DEA9-40B1-ADDE-E167F38CCF53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloAutomation.API.Services.Contracts", "TrelloAutomation.API\TrelloAutomation.API.Services.Contracts\TrelloAutomation.API.Services.Contracts.csproj", "{1723D713-8867-4FCA-A486-CA1E8E352757}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloAutomation.API.Services.Model", "TrelloAutomation.API\TrelloAutomation.API.Services.Model\TrelloAutomation.API.Services.Model.csproj", "{BD455E0D-7818-4560-A452-0D29E3A6E7FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{882F3B27-2377-4892-97F5-77569E97588D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{882F3B27-2377-4892-97F5-77569E97588D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{882F3B27-2377-4892-97F5-77569E97588D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{882F3B27-2377-4892-97F5-77569E97588D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1533DA0-7C02-4304-BA14-E52040D5C3B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1533DA0-7C02-4304-BA14-E52040D5C3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1533DA0-7C02-4304-BA14-E52040D5C3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1533DA0-7C02-4304-BA14-E52040D5C3B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67D6A055-F138-4005-929C-5CDFC394240E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67D6A055-F138-4005-929C-5CDFC394240E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67D6A055-F138-4005-929C-5CDFC394240E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67D6A055-F138-4005-929C-5CDFC394240E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AEA4DDB-16B8-4F69-8042-7EE1E42D2553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AEA4DDB-16B8-4F69-8042-7EE1E42D2553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AEA4DDB-16B8-4F69-8042-7EE1E42D2553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AEA4DDB-16B8-4F69-8042-7EE1E42D2553}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F22E228-1D42-458B-ACAF-CBF9D349690A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F22E228-1D42-458B-ACAF-CBF9D349690A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F22E228-1D42-458B-ACAF-CBF9D349690A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F22E228-1D42-458B-ACAF-CBF9D349690A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2109F36E-8D46-48C5-AF94-448D8C44B33F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2109F36E-8D46-48C5-AF94-448D8C44B33F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2109F36E-8D46-48C5-AF94-448D8C44B33F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2109F36E-8D46-48C5-AF94-448D8C44B33F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCCBB741-D387-4C8C-94A3-3E0848125C45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCCBB741-D387-4C8C-94A3-3E0848125C45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCCBB741-D387-4C8C-94A3-3E0848125C45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCCBB741-D387-4C8C-94A3-3E0848125C45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6458FA94-DEA9-40B1-ADDE-E167F38CCF53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6458FA94-DEA9-40B1-ADDE-E167F38CCF53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6458FA94-DEA9-40B1-ADDE-E167F38CCF53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6458FA94-DEA9-40B1-ADDE-E167F38CCF53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1723D713-8867-4FCA-A486-CA1E8E352757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1723D713-8867-4FCA-A486-CA1E8E352757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1723D713-8867-4FCA-A486-CA1E8E352757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1723D713-8867-4FCA-A486-CA1E8E352757}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD455E0D-7818-4560-A452-0D29E3A6E7FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD455E0D-7818-4560-A452-0D29E3A6E7FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD455E0D-7818-4560-A452-0D29E3A6E7FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD455E0D-7818-4560-A452-0D29E3A6E7FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{882F3B27-2377-4892-97F5-77569E97588D} = {8288CD60-051D-4B25-A513-E6BADE47A20D}
+		{E1533DA0-7C02-4304-BA14-E52040D5C3B2} = {8288CD60-051D-4B25-A513-E6BADE47A20D}
+		{67D6A055-F138-4005-929C-5CDFC394240E} = {8288CD60-051D-4B25-A513-E6BADE47A20D}
+		{5AEA4DDB-16B8-4F69-8042-7EE1E42D2553} = {57047734-5EFA-4EB7-A0B8-009FF6FEDA30}
+		{5F22E228-1D42-458B-ACAF-CBF9D349690A} = {57047734-5EFA-4EB7-A0B8-009FF6FEDA30}
+		{2109F36E-8D46-48C5-AF94-448D8C44B33F} = {A2CCCEDC-1C4F-4376-9F7A-2547F0914040}
+		{CCCBB741-D387-4C8C-94A3-3E0848125C45} = {A2CCCEDC-1C4F-4376-9F7A-2547F0914040}
+		{6458FA94-DEA9-40B1-ADDE-E167F38CCF53} = {F3957EE1-9D19-42CE-A4CD-318FB2179C3B}
+		{1723D713-8867-4FCA-A486-CA1E8E352757} = {F3957EE1-9D19-42CE-A4CD-318FB2179C3B}
+		{BD455E0D-7818-4560-A452-0D29E3A6E7FC} = {F3957EE1-9D19-42CE-A4CD-318FB2179C3B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DBC24F2C-A3A1-4767-858F-E8D1042930AB}
+	EndGlobalSection
+EndGlobal

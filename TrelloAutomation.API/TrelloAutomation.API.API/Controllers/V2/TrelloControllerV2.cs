@@ -45,7 +45,8 @@ namespace TrelloAutomation.API.API.Controllers.V2
             Request.Headers.TryGetValue("Token", out Microsoft.Extensions.Primitives.StringValues token);
             Request.Headers.TryGetValue("Key", out Microsoft.Extensions.Primitives.StringValues key);
 
-            return await _service.CheckDailyStartAsync(token, key);
+            _service.SetAuthorization(token, key);
+            return await _service.CheckDailyStartAsync();
         }
         
         /// <summary>
@@ -65,7 +66,8 @@ namespace TrelloAutomation.API.API.Controllers.V2
             Request.Headers.TryGetValue("Token", out Microsoft.Extensions.Primitives.StringValues token);
             Request.Headers.TryGetValue("Key", out Microsoft.Extensions.Primitives.StringValues key);
 
-            return await _service.CheckWeeklyReportAsync(token, key);
+            _service.SetAuthorization(token, key);
+            return await _service.CheckWeeklyReportAsync();
         }
         #endregion
 

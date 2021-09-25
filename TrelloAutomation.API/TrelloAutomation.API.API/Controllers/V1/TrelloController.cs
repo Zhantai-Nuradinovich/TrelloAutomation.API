@@ -43,7 +43,7 @@ namespace TrelloAutomation.API.API.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(bool))]
         [HttpGet("daily/check")]
-        public async Task<bool> CheckDailyStart()
+        public async Task<bool> CheckDailyStart() // todo: return messages with Data, etc
         {
             _logger.LogDebug($"TrelloControllers::CheckingDailyStart");
 
@@ -55,7 +55,8 @@ namespace TrelloAutomation.API.API.Controllers.V1
                 return false;
             }
 
-            return await _service.CheckDailyStartAsync(token, key);
+            _service.SetAuthorization(token, key);
+            return await _service.CheckDailyStartAsync();
         }
         
         /// <summary>
@@ -82,7 +83,8 @@ namespace TrelloAutomation.API.API.Controllers.V1
                 return false;
             }
 
-            return await _service.CheckWeeklyReportAsync(token, key);
+            _service.SetAuthorization(token, key);
+            return await _service.CheckWeeklyReportAsync();
         }
         #endregion
 

@@ -6,7 +6,7 @@ namespace TrelloAutomation.API.Services.Contracts
     public interface ITrelloService
     {
         void SetAuthorization(string token, string key);
-        Task<bool> CheckDailyStartAsync();
-        Task<bool> CheckWeeklyReportAsync();
+        Task<BaseResponse<string[]>> CheckDailyStartAsync();
+        Task<BaseResponse<string[]>> CheckWeeklyReportAsync();
     }
 }

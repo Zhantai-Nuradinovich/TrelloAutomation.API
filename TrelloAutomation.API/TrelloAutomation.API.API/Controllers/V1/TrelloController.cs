@@ -43,7 +43,7 @@ namespace TrelloAutomation.API.API.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(bool))]
         [HttpGet("daily/check")]
-        public async Task<bool> CheckDailyStart() // todo: return messages with Data, etc
+        public async Task<S.BaseResponse<string[]>> CheckDailyStart() // todo: return messages with Data, etc
         {
             _logger.LogDebug($"TrelloControllers::CheckingDailyStart");
 
@@ -52,7 +52,10 @@ namespace TrelloAutomation.API.API.Controllers.V1
             if(Microsoft.Extensions.Primitives.StringValues.IsNullOrEmpty(token) 
                 || Microsoft.Extensions.Primitives.StringValues.IsNullOrEmpty(key))
             {
-                return false;
+                return new S.BaseResponse<string[]>()
+                {
+                    Message = "Token or Key are null or empty"
+                }; ;
             }
 
             _service.SetAuthorization(token, key);
@@ -71,7 +74,7 @@ namespace TrelloAutomation.API.API.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(bool))]
         [HttpGet("weekly/check")]
-        public async Task<bool> CheckWeeklyStart()
+        public async Task<S.BaseResponse<string[]>> CheckWeeklyStart()
         {
             _logger.LogDebug($"TrelloControllers::CheckingDailyStart");
 
@@ -80,7 +83,10 @@ namespace TrelloAutomation.API.API.Controllers.V1
             if (Microsoft.Extensions.Primitives.StringValues.IsNullOrEmpty(token)
                 || Microsoft.Extensions.Primitives.StringValues.IsNullOrEmpty(key))
             {
-                return false;
+                return new S.BaseResponse<string[]>()
+                {
+                    Message = "Token or Key are null or empty"
+                };
             }
 
             _service.SetAuthorization(token, key);

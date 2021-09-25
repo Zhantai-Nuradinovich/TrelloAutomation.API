@@ -40,7 +40,7 @@ namespace TrelloAutomation.API.API.Controllers.V2
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(bool))]
         [HttpGet("daily/check")]
-        public async Task<bool> CheckDailyStart()
+        public async Task<S.BaseResponse<string[]>> CheckDailyStart()
         {
             Request.Headers.TryGetValue("Token", out Microsoft.Extensions.Primitives.StringValues token);
             Request.Headers.TryGetValue("Key", out Microsoft.Extensions.Primitives.StringValues key);
@@ -61,7 +61,7 @@ namespace TrelloAutomation.API.API.Controllers.V2
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(bool))]
         [HttpGet("weekly/check")]
-        public async Task<bool> CheckWeeklyStart()
+        public async Task<S.BaseResponse<string[]>> CheckWeeklyStart()
         {
             Request.Headers.TryGetValue("Token", out Microsoft.Extensions.Primitives.StringValues token);
             Request.Headers.TryGetValue("Key", out Microsoft.Extensions.Primitives.StringValues key);

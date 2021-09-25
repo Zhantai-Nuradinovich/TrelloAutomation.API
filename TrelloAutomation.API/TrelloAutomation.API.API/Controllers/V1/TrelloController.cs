@@ -31,12 +31,6 @@ namespace TrelloAutomation.API.API.Controllers.V1
 #pragma warning restore CS1591
 
         #region GET
-        /// <summary>
-        /// Returns a user entity according to the provided Id.
-        /// </summary>
-        /// <remarks>
-        /// XML comments included in controllers will be extracted and injected in Swagger/OpenAPI file.
-        /// </remarks>
         /// <returns>
         /// Returns true according to the state of trello.
         /// </returns>
@@ -62,12 +56,6 @@ namespace TrelloAutomation.API.API.Controllers.V1
             return await _service.CheckDailyStartAsync();
         }
         
-        /// <summary>
-        /// Returns a user entity according to the provided Id.
-        /// </summary>
-        /// <remarks>
-        /// XML comments included in controllers will be extracted and injected in Swagger/OpenAPI file.
-        /// </remarks>
         /// <returns>
         /// Returns true according to the state of trello.
         /// </returns>
@@ -123,46 +111,9 @@ namespace TrelloAutomation.API.API.Controllers.V1
         #endregion
 
         //#region PUT
-        ///// <summary>
-        ///// Updates an user entity.
-        ///// </summary>
-        ///// <remarks>
-        ///// No remarks.
-        ///// </remarks>
-        ///// <param name="parameter"></param>
-        ///// <returns>
-        ///// Returns a boolean notifying if the user has been updated properly.
-        ///// </returns>
-        ///// <response code="200">Returns a boolean notifying if the user has been updated properly.</response>
-        //[HttpPut()]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-        //public async Task<bool> UpdateUser(User parameter)
-        //{
-        //    if (parameter == null)
-        //        throw new ArgumentNullException("parameter");
-
-        //    return await _service.UpdateAsync(_mapper.Map<S.User>(parameter));
-        //}
         //#endregion
 
         //#region DELETE
-        ///// <summary>
-        ///// Deletes an user entity.
-        ///// </summary>
-        ///// <remarks>
-        ///// No remarks.
-        ///// </remarks>
-        ///// <param name="id">User Id</param>
-        ///// <returns>
-        ///// Boolean notifying if the user has been deleted properly.
-        ///// </returns>
-        ///// <response code="200">Boolean notifying if the user has been deleted properly.</response>
-        //[HttpDelete("{id}")]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-        //public async Task<bool> DeleteDevice(string id)
-        //{
-        //    return await _service.DeleteAsync(id);
-        //}
         //#endregion
 
         #region Excepions

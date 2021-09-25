@@ -47,7 +47,7 @@ namespace TrelloAutomation.API.Services
 
         #endregion
 
-        #region Daily preparation
+        #region Daily
         public async Task<BaseResponse<string[]>> CheckDailyStartAsync()
         {
             var response = new BaseResponse<string[]>();
@@ -55,7 +55,7 @@ namespace TrelloAutomation.API.Services
             var boards = await GetBoardsByName("zhan.");
             foreach (var board in boards)
             {
-                var strategyList = board.Lists.Where(x => x.Name.StartsWith("Strategy")).FirstOrDefault();
+                var strategyList = board.Lists.Where(x => x.Name.ToLower().StartsWith("strategy")).FirstOrDefault();
                 if(strategyList == null)
                 {
                     errors.Add("Couldn't find Strategy List in " + board.Name + " board");
@@ -63,7 +63,6 @@ namespace TrelloAutomation.API.Services
                 }
                 await strategyList.Refresh();
 
-                //Getting planning and reporting cards
                 var dailyCard = strategyList.Cards.Where(x => x.Name.ToLower().StartsWith("daily")).FirstOrDefault();
                 var dailyReportCard = strategyList.Cards.Where(x => x.Name.ToLower().StartsWith("report")).FirstOrDefault();
                 if (dailyCard == null || dailyReportCard == null)
@@ -71,11 +70,10 @@ namespace TrelloAutomation.API.Services
                     errors.Add("Couldn't find Daily and Report cards in " + board.Name + " board");
                     continue;
                 }
-
                 var reportingComments = dailyReportCard.Comments;
                 await reportingComments.Refresh();
-                var theLastMessage = reportingComments.OrderByDescending(x => x.CreationDate).FirstOrDefault();
 
+                var theLastMessage = reportingComments.OrderByDescending(x => x.CreationDate).FirstOrDefault();
                 if(string.IsNullOrEmpty(dailyCard.Description) || string.IsNullOrEmpty(theLastMessage.Data.Text))
                 {
                     errors.Add("Description in Daily card or Comments in Report are empty in " + board.Name + " board");
@@ -92,19 +90,56 @@ namespace TrelloAutomation.API.Services
                                                        + board.Name + " board");
                 }
             }
-
             SetAuthorization("I'm DONE!", "I'm DONE!"); //clean key and token
+
             response.IsSuccess = !errors.Any();
             response.Data = errors.ToArray();
-            response.Message = !errors.Any() ? "Trello is ready for planning." : "Something went wrong, see more details.";
+            response.Message = !errors.Any() ? "Trello is ready." : "Something went wrong, see more details.";
             return response;
         }
 
         public Task<BaseResponse<string[]>> CheckWeeklyReportAsync()
         {
-            throw null;
+            return null;
         }
 
+        #endregion
+
+        #region Weekly
+        public async Task<BaseResponse<string[]>> PrepareReportsAsync()//Todo: consider analyzer for reports
+        {
+            var response = new BaseResponse<string[]>();
+            var errors = new List<string>();
+            var boards = await GetBoardsByName("zhan.");
+            foreach (var board in boards)
+            {
+                var strategyList = board.Lists.Where(x => x.Name.StartsWith("Strategy")).FirstOrDefault();
+                if (strategyList == null)
+                {
+                    errors.Add("Couldn't find Strategy List in " + board.Name + " board");
+                    continue;
+                }
+                await strategyList.Refresh();
+
+                var dailyReportCard = strategyList.Cards.Where(x => x.Name.ToLower().StartsWith("report")).FirstOrDefault();
+                if (dailyReportCard == null)
+                {
+                    errors.Add("Couldn't find Report card in " + board.Name + " board");
+                    continue;
+                }
+
+                var possibleErrors = await PrepareReportingCard(dailyReportCard);
+                if (possibleErrors.Any())
+                    errors.AddRange(possibleErrors);
+
+            }
+            SetAuthorization("I'm DONE!", "I'm DONE!"); //clean key and token
+            
+            response.IsSuccess = !errors.Any();
+            response.Data = errors.ToArray();
+            response.Message = !errors.Any() ? "Trello is ready." : "Something went wrong, see more details.";
+            return response;
+        }
         #endregion
 
         #region Auxilary methods
@@ -115,6 +150,14 @@ namespace TrelloAutomation.API.Services
             int.TryParse(dayAndMonth[1], out int month);
             DateTime date = new DateTime(DateTime.Now.Year, month, day);
             return date;
+        }
+
+        private async Task<List<string>> PrepareReportingCard(ICard card)//write results of the week to the description
+        {
+            var reportingComments = card.Comments;
+            await reportingComments.Refresh();
+
+            return new List<string>();
         }
 
         //todo: Validator

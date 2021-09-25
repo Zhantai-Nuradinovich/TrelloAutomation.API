@@ -8,5 +8,6 @@ namespace TrelloAutomation.API.Services.Contracts
         void SetAuthorization(string token, string key);
         Task<BaseResponse<string[]>> CheckDailyStartAsync();
         Task<BaseResponse<string[]>> CheckWeeklyReportAsync();
+        Task<BaseResponse<string[]>> PrepareReportsAsync();
     }
 }

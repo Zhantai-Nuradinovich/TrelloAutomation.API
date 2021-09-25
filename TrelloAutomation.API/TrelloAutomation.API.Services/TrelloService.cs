@@ -56,6 +56,11 @@ namespace TrelloAutomation.API.Services
             foreach (var board in boards)
             {
                 var strategyList = board.Lists.Where(x => x.Name.StartsWith("Strategy")).FirstOrDefault();
+                if(strategyList == null)
+                {
+                    errors.Add("Couldn't find Strategy List in " + board.Name + " board");
+                    continue;
+                }
                 await strategyList.Refresh();
 
                 //Getting planning and reporting cards
@@ -63,13 +68,19 @@ namespace TrelloAutomation.API.Services
                 var dailyReportCard = strategyList.Cards.Where(x => x.Name.ToLower().StartsWith("report")).FirstOrDefault();
                 if (dailyCard == null || dailyReportCard == null)
                 {
-                    errors.Add("Couldn't find \"Daily\" and \"Report\" cards in " + board.Name + " board");
+                    errors.Add("Couldn't find Daily and Report cards in " + board.Name + " board");
                     continue;
                 }
 
                 var reportingComments = dailyReportCard.Comments;
                 await reportingComments.Refresh();
                 var theLastMessage = reportingComments.OrderByDescending(x => x.CreationDate).FirstOrDefault();
+
+                if(string.IsNullOrEmpty(dailyCard.Description) || string.IsNullOrEmpty(theLastMessage.Data.Text))
+                {
+                    errors.Add("Description in Daily card or Comments in Report are empty in " + board.Name + " board");
+                    continue;
+                }
 
                 DateTime date = GetDateFromDailyReport(dailyCard.Description);
                 DateTime dateFromReport = GetDateFromDailyReport(theLastMessage.Data.Text);
@@ -105,6 +116,32 @@ namespace TrelloAutomation.API.Services
             DateTime date = new DateTime(DateTime.Now.Year, month, day);
             return date;
         }
+
+        //todo: Validator
+        //private bool ValidateTrelloEntity(Model.Common.TrelloErrorTypes type, object entity, out string message, string boardName)
+        //{
+        //    switch (type)
+        //    {
+        //        case Model.Common.TrelloErrorTypes.Board:
+        //            break;
+        //        case Model.Common.TrelloErrorTypes.List:
+        //            if (entity == null)
+        //            {
+        //                message = "Couldn't find Strategy List in " + boardName + " board";
+        //                return false;
+        //            }
+        //            break;
+        //        case Model.Common.TrelloErrorTypes.Card:
+        //            break;
+        //        case Model.Common.TrelloErrorTypes.Comment:
+        //            break;
+        //        case Model.Common.TrelloErrorTypes.Date:
+        //            break;
+
+        //    }
+        //    message = "Ok.";
+        //    return true;
+        //}
         #endregion
     }
 }

@@ -14,4 +14,14 @@ namespace TrelloAutomation.API.Services.Model.Common
         Comment = 4,
         Date = 5
     }
+
+    public enum TrelloBoardTypes
+    {
+        Plan = 1,
+        Health = 2,
+        Project = 3,
+        SelfDevelopment = 4,
+        Routine = 5,
+        None = 6
+    }
 }

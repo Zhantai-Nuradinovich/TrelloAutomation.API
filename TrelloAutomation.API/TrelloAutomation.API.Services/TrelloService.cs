@@ -9,6 +9,8 @@ using Manatee.Trello.Rest;
 using Manatee.Trello;
 using System.Linq;
 using System.Collections.Generic;
+using TrelloAutomation.API.Services.Model.Common;
+using TrelloAutomation.API.Services.AuxTrelloServices.Card;
 
 namespace TrelloAutomation.API.Services
 {
@@ -97,15 +99,13 @@ namespace TrelloAutomation.API.Services
             response.Message = !errors.Any() ? "Trello is ready." : "Something went wrong, see more details.";
             return response;
         }
+        #endregion
 
+        #region Weekly
         public Task<BaseResponse<string[]>> CheckWeeklyReportAsync()
         {
             return null;
         }
-
-        #endregion
-
-        #region Weekly
         public async Task<BaseResponse<string[]>> PrepareReportsAsync()//Todo: consider analyzer for reports
         {
             var response = new BaseResponse<string[]>();
@@ -128,7 +128,8 @@ namespace TrelloAutomation.API.Services
                     continue;
                 }
 
-                var possibleErrors = await PrepareReportingCard(dailyReportCard);
+                TrelloBoardTypes boardType = GetBoardType(board);
+                var possibleErrors = await PrepareReportingCard(dailyReportCard, boardType);
                 if (possibleErrors.Any())
                     errors.AddRange(possibleErrors);
 
@@ -152,12 +153,21 @@ namespace TrelloAutomation.API.Services
             return date;
         }
 
-        private async Task<List<string>> PrepareReportingCard(ICard card)//write results of the week to the description
+        private async Task<List<string>> PrepareReportingCard(ICard card, TrelloBoardTypes boardType)//write results of the week to the description
         {
-            var reportingComments = card.Comments;
-            await reportingComments.Refresh();
+            return await CardService.ProcessCard(card);
+        }
 
-            return new List<string>();
+        private TrelloBoardTypes GetBoardType(IBoard board)
+        {
+            if (board.Name.ToLower().Contains("plan"))
+                return TrelloBoardTypes.Plan;
+            else if (board.Name.ToLower().Contains("health"))
+                return TrelloBoardTypes.Health;
+            else if (board.Name.ToLower().Contains("education"))
+                return TrelloBoardTypes.Routine;
+
+            return TrelloBoardTypes.None;
         }
 
         //todo: Validator

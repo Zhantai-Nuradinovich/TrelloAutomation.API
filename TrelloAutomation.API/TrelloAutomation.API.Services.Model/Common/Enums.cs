@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrelloAutomation.API.Services.Model.Common
 {
-    public enum TrelloErrorTypes
+    public enum TrelloErrorType
     {
         Board = 1,
         List = 2,
@@ -15,7 +15,7 @@ namespace TrelloAutomation.API.Services.Model.Common
         Date = 5
     }
 
-    public enum TrelloBoardTypes
+    public enum TrelloBoardType
     {
         Plan = 1,
         Health = 2,

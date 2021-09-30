@@ -128,8 +128,8 @@ namespace TrelloAutomation.API.Services
                     continue;
                 }
 
-                TrelloBoardTypes boardType = GetBoardType(board);
-                var possibleErrors = await PrepareReportingCard(dailyReportCard, boardType);
+                TrelloBoardType boardType = GetBoardType(board);
+                var possibleErrors = await CardService.ProcessCard(dailyReportCard, boardType);//write results of the week to the description
                 if (possibleErrors.Any())
                     errors.AddRange(possibleErrors);
 
@@ -153,21 +153,18 @@ namespace TrelloAutomation.API.Services
             return date;
         }
 
-        private async Task<List<string>> PrepareReportingCard(ICard card, TrelloBoardTypes boardType)//write results of the week to the description
-        {
-            return await CardService.ProcessCard(card);
-        }
-
-        private TrelloBoardTypes GetBoardType(IBoard board)
+        private TrelloBoardType GetBoardType(IBoard board)
         {
             if (board.Name.ToLower().Contains("plan"))
-                return TrelloBoardTypes.Plan;
+                return TrelloBoardType.Plan;
             else if (board.Name.ToLower().Contains("health"))
-                return TrelloBoardTypes.Health;
+                return TrelloBoardType.Health;
+            else if (board.Name.ToLower().Contains("project"))
+                return TrelloBoardType.Project;
             else if (board.Name.ToLower().Contains("education"))
-                return TrelloBoardTypes.Routine;
+                return TrelloBoardType.Routine;
 
-            return TrelloBoardTypes.None;
+            return TrelloBoardType.None;
         }
 
         //todo: Validator

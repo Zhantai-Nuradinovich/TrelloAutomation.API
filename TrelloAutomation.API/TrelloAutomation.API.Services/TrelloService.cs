@@ -82,8 +82,8 @@ namespace TrelloAutomation.API.Services
                     continue;
                 }
 
-                DateTime date = GetDateFromDailyReport(dailyCard.Description);
-                DateTime dateFromReport = GetDateFromDailyReport(theLastMessage.Data.Text);
+                DateTime date = CardService.GetDateFromDailyReport(dailyCard.Description);
+                DateTime dateFromReport = CardService.GetDateFromDailyReport(theLastMessage.Data.Text);
                 if (date != dateFromReport)
                 {
                     errors.Add("Dates are not equal (" + date.ToShortDateString() 
@@ -113,7 +113,7 @@ namespace TrelloAutomation.API.Services
             var boards = await GetBoardsByName("zhan.");
             foreach (var board in boards)
             {
-                var strategyList = board.Lists.Where(x => x.Name.StartsWith("Strategy")).FirstOrDefault();
+                var strategyList = board.Lists.Where(x => x.Name.ToLower().StartsWith("strategy")).FirstOrDefault();
                 if (strategyList == null)
                 {
                     errors.Add("Couldn't find Strategy List in " + board.Name + " board");
@@ -144,14 +144,6 @@ namespace TrelloAutomation.API.Services
         #endregion
 
         #region Auxilary methods
-        private DateTime GetDateFromDailyReport(string dailyReport)
-        {
-            string[] dayAndMonth = dailyReport.Split("**")[1].Split(".");
-            int.TryParse(dayAndMonth[0], out int day);
-            int.TryParse(dayAndMonth[1], out int month);
-            DateTime date = new DateTime(DateTime.Now.Year, month, day);
-            return date;
-        }
 
         private TrelloBoardType GetBoardType(IBoard board)
         {

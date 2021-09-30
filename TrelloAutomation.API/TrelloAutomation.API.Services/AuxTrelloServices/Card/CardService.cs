@@ -31,5 +31,16 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card
             }
             return await _cardStrategy.ProcessCard(card);
         }
+
+        #region AuxilaryMethods
+        public static DateTime GetDateFromDailyReport(string dailyReport)
+        {
+            string[] dayAndMonth = dailyReport.Split("**")[1].Split(".");
+            int.TryParse(dayAndMonth[0], out int day);
+            int.TryParse(dayAndMonth[1], out int month);
+            DateTime date = new DateTime(DateTime.Now.Year, month, day);
+            return date;
+        }
+        #endregion
     }
 }

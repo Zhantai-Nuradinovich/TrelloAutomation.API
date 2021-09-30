@@ -4,4 +4,10 @@
 ## About the project
 
 It helps to automate some tasks for personal productivity. I created a structure in Trello that helps keeping track of every aspect of my life.
-Myy Trello has daily, weekly, monthly and annual performance reports that help me to make better decisions, but it has so many routine manual tasks that automating them became necessary.
+My Trello has daily, weekly, monthly and annual performance reports that help me to make better decisions, but it has so many routine manual tasks that automating them became necessary.
+
+## Used technology
+
+- Clean Architecture
+- Manatee.Trello
+- .NET 5

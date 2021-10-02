@@ -56,23 +56,8 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
             return _possibleErrors;
         }
 
-        private string GetUpdatedReportDescription(string oldDescription, CalculationResult result)
+        private int GetStartMoney(string description)
         {
-            return "";
-        }
-        private Tuple<int, int> GetTasks(string comment)
-        {
-            throw new NotImplementedException();
-        }
-        
-        private Tuple<int, int> GetPomodoros(string comment)
-        {
-            throw new NotImplementedException();
-        }
-
-        private CalculationResult GetAllHours(string comment)
-        {
-            //summarises all hours in 1 period
             throw new NotImplementedException();
         }
 
@@ -81,14 +66,41 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
             throw new NotImplementedException();
         }
 
-        private int GetMoney(string commentContent)
+        private Tuple<int, int> GetTasks(string comment)
         {
-            throw new NotImplementedException();
+            var tasksLine = comment.Split("-")[2].Trim();// = - Done - <Starts here> 2/2 tasks for 2/2 hours `|` 4/4 Pomodoros </End> 
+            int pomodorosDone = tasksLine[0];
+            int pomodorosCount = tasksLine[2];
+
+            return new Tuple<int, int>(pomodorosDone, pomodorosCount);
+        }
+        
+        private Tuple<int, int> GetPomodoros(string comment)
+        {
+
+            var tasksLine = comment.Split("-")[2].Trim().Split("`|`")[0].Trim();// = <Starts here>4/4 Pomodoros</End> 
+            int tasksDone = tasksLine[0];
+            int tasksCount = tasksLine[2];
+
+            return new Tuple<int, int>(tasksDone, tasksCount);
         }
 
-        private int GetStartMoney(string description)
+        private int GetMoney(string comment)
         {
+            var money = comment.Split("**")[2].Split("-")[14].Trim();//todo: change description's structure
+            int.TryParse(money, out int result);
+            return result;
+        }
+
+        private CalculationResult GetAllHours(string comment)
+        {
+            //summarises all hours in 1 period
             throw new NotImplementedException();
+        }
+        
+        private string GetUpdatedReportDescription(string oldDescription, CalculationResult result)
+        {
+            return "";
         }
 
         class CalculationResult

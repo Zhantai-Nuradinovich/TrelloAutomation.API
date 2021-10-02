@@ -22,12 +22,15 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
             CalculationResult result = new CalculationResult();
 
             var comments = card.Comments;
-            comments.Refresh();
+            await comments.Refresh();
             if (comments.Count() == 0)
             {
                 _possibleErrors.Add("Нет комментариев");
                 return _possibleErrors;
             }
+            string cardDescription = card.Description;
+            result.StartMoney = GetStartMoney(cardDescription);
+            result.CurrentWeek = GetCurrentWeek(cardDescription);
 
             //todo: group comments by weeks!
             foreach (var comment in comments)
@@ -41,10 +44,13 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
                 result.PomodoroDone += pomodoros.Item1;
                 result.PomodoroCount += pomodoros.Item2;
 
+                int money = GetMoney(commentContent);
+                result.SpentMoney += money; 
+
                 result.AddHours(GetAllHours(commentContent));
             }
-            string newDescription = GetUpdatedReportDescription(card.Description, result);
-            if (!string.IsNullOrEmpty(card.Description))
+            string newDescription = GetUpdatedReportDescription(cardDescription, result);
+            if (!string.IsNullOrEmpty(cardDescription) && !string.IsNullOrEmpty(newDescription))
                 card.Description = newDescription;
 
             return _possibleErrors;
@@ -70,15 +76,30 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
             throw new NotImplementedException();
         }
 
+        private int GetCurrentWeek(string cardDescription)
+        {
+            throw new NotImplementedException();
+        }
+
+        private int GetMoney(string commentContent)
+        {
+            throw new NotImplementedException();
+        }
+
+        private int GetStartMoney(string description)
+        {
+            throw new NotImplementedException();
+        }
+
         class CalculationResult
         {
-            public int CurrentWeek { get; set; } = 1;
-            public int StartMoney { get; set; } = 0;
-            public int MoneyForNextPeriod { get; set; } = 0;
-            public int TasksCount { get; set; } = 0;
-            public int TasksDone { get; set; } = 0;
-            public int PomodoroCount { get; set; } = 0;
-            public int PomodoroDone { get; set; } = 0;
+            public int CurrentWeek { get; set; }
+            public int StartMoney { get; set; }
+            public int SpentMoney { get; set; }
+            public int TasksCount { get; set; }
+            public int TasksDone { get; set; }
+            public int PomodoroCount { get; set; }
+            public int PomodoroDone { get; set; }
             public TimeSpan Messengers { get; set; }
             public TimeSpan Browsers { get; set; }
             public TimeSpan Youtube { get; set; }

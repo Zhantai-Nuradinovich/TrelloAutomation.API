@@ -30,7 +30,7 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
             }
             string cardDescription = card.Description;
             result.StartMoney = GetStartMoney(cardDescription);
-            result.CurrentWeek = GetCurrentWeek(cardDescription);
+            result.CurrentWeek = GetCurrentWeek(comments.Count());
 
             //todo: group comments by weeks!
             foreach (var comment in comments)
@@ -58,12 +58,25 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
 
         private int GetStartMoney(string description)
         {
-            throw new NotImplementedException();
+            var startMoney = description.Split("---")[0].Split("-")[1].Trim();
+            int.TryParse(startMoney, out int result);
+            return result;
         }
 
-        private int GetCurrentWeek(string cardDescription)
+        private int GetCurrentWeek(int commentsCount)
         {
-            throw new NotImplementedException();
+            int currentWeek = 1;
+
+            if (commentsCount > 28)
+                currentWeek = 5;
+            else if (commentsCount > 21)
+                currentWeek = 4;
+            else if (commentsCount > 14)
+                currentWeek = 3;
+            else if (commentsCount > 7)
+                currentWeek = 2;
+
+            return currentWeek;
         }
 
         private Tuple<int, int> GetTasks(string comment)

@@ -41,6 +41,16 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card
             DateTime date = new DateTime(DateTime.Now.Year, month, day);
             return date;
         }
+        
+        public static string SetDateToDailyReport(string dailyReport)
+        {
+            DateTime newDate = DateTime.Now;
+            //string[] dayAndMonth = dailyReport.Split("**")[1].Split(".");
+            //int.TryParse(dayAndMonth[0], out int day);
+            //int.TryParse(dayAndMonth[1], out int month);
+            //DateTime date = new DateTime(DateTime.Now.Year, month, day);
+            return "";
+        }
         #endregion
     }
 }

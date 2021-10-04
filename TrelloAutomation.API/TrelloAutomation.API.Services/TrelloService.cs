@@ -96,7 +96,60 @@ namespace TrelloAutomation.API.Services
 
             response.IsSuccess = !errors.Any();
             response.Data = errors.ToArray();
-            response.Message = !errors.Any() ? "Trello is ready." : "Something went wrong, see more details.";
+            response.Message = !errors.Any() ? "Trello is ready." : "Trello is not ready! Something went wrong, see more details.";
+            return response;
+        }
+        public async Task<BaseResponse<string[]>> PrepareDailyStartAsync()
+        {
+            var response = new BaseResponse<string[]>();
+            var errors = new List<string>();
+            var boards = await GetBoardsByName("zhan.");
+            foreach (var board in boards)
+            {
+                var strategyList = board.Lists.Where(x => x.Name.ToLower().StartsWith("strategy")).FirstOrDefault();
+                if (strategyList == null)
+                {
+                    errors.Add("Couldn't find Strategy List in " + board.Name + " board");
+                    continue;
+                }
+                await strategyList.Refresh();
+
+                var dailyCard = strategyList.Cards.Where(x => x.Name.ToLower().StartsWith("daily")).FirstOrDefault();
+                var dailyReportCard = strategyList.Cards.Where(x => x.Name.ToLower().StartsWith("report")).FirstOrDefault();
+                if (dailyCard == null || dailyReportCard == null)
+                {
+                    errors.Add("Couldn't find Daily and Report cards in " + board.Name + " board");
+                    continue;
+                }
+                var reportingComments = dailyReportCard.Comments;
+                await reportingComments.Refresh();
+
+                var theLastMessage = reportingComments.OrderByDescending(x => x.CreationDate).FirstOrDefault();
+                if (string.IsNullOrEmpty(dailyCard.Description) || string.IsNullOrEmpty(theLastMessage.Data.Text))
+                {
+                    errors.Add("Description in Daily card or Comments in Report are empty in " + board.Name + " board");
+                    continue;
+                }
+
+                DateTime date = CardService.GetDateFromDailyReport(dailyCard.Description);
+                DateTime dateFromReport = CardService.GetDateFromDailyReport(theLastMessage.Data.Text);
+                if (date != dateFromReport)
+                {
+                    var newComment = dailyCard.Description;
+                    await reportingComments.Add(newComment);
+
+                    var dailyComments = dailyCard.Comments;
+                    await dailyComments.Refresh();
+
+                    var comment = dailyComments.FirstOrDefault().Data.Text;
+                    dailyComments.FirstOrDefault().Data.Text = CardService.SetDateToDailyReport(comment);
+                }
+            }
+            SetAuthorization("I'm DONE!", "I'm DONE!"); //clean key and token
+
+            response.IsSuccess = !errors.Any();
+            response.Data = errors.ToArray();
+            response.Message = !errors.Any() ? "Trello is ready." : "Trello is not ready! Something went wrong, see more details.";
             return response;
         }
         #endregion

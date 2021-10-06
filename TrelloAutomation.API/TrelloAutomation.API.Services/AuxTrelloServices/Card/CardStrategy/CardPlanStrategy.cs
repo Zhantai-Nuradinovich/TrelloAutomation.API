@@ -81,39 +81,54 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
 
         private Tuple<int, int> GetTasks(string comment)
         {
-            var tasksLine = comment.Split("-")[2].Trim();// = - Done - <Starts here> 2/2 tasks for 2/2 hours `|` 4/4 Pomodoros </End> 
-            int pomodorosDone = tasksLine[0];
-            int pomodorosCount = tasksLine[2];
+            var tasks = GetKeyValuesFromComment(comment, "- Done tasks -", "- Pomodoros -").Split("/");
+            int.TryParse(tasks[0], out int tasksDone);
+            int.TryParse(tasks[1], out int tasksCount);
 
-            return new Tuple<int, int>(pomodorosDone, pomodorosCount);
+            return new Tuple<int, int>(tasksDone, tasksCount);
         }
         
         private Tuple<int, int> GetPomodoros(string comment)
         {
+            var pomodoros = GetKeyValuesFromComment(comment, "- Pomodoros -", "- Hours -").Split("/");
+            int.TryParse(pomodoros[0], out int pomodorosDone);
+            int.TryParse(pomodoros[1], out int pomodorosCount);
 
-            var tasksLine = comment.Split("-")[2].Trim().Split("`|`")[0].Trim();// = <Starts here>4/4 Pomodoros</End> 
-            int tasksDone = tasksLine[0];
-            int tasksCount = tasksLine[2];
-
-            return new Tuple<int, int>(tasksDone, tasksCount);
+            return new Tuple<int, int>(pomodorosDone, pomodorosCount);
         }
 
         private int GetMoney(string comment)
         {
-            var money = comment.Split("**")[2].Split("-")[14].Trim();//todo: change description's structure
+            var money = GetKeyValuesFromComment(comment, "- Money spent -", "- Finished at -");
             int.TryParse(money, out int result);
+
             return result;
         }
 
         private CalculationResult GetAllHours(string comment)
         {
-            //summarises all hours in 1 period
-            throw new NotImplementedException();
+            string totalHours = GetKeyValuesFromComment(comment, "- Screen time -", "- Messengers");
+            string messengers = GetKeyValuesFromComment(comment, "- Messengers `-`", "- Browser `-`");
+            string browser = GetKeyValuesFromComment(comment, "- Browser `-`", "- Youtube `-`");
+            string youtube = GetKeyValuesFromComment(comment, "- Youtube `-`", "- Job `-`");
+            string job = GetKeyValuesFromComment(comment, "- Job `-`", "- Money spent -");
+            string endTime = GetKeyValuesFromComment(comment, "- Finished at -", "- **Комментарий**");
+
+            var result = new CalculationResult();
+            //Some processing. Todo: make global constants instead of "key word"
+            return result;
         }
         
         private string GetUpdatedReportDescription(string oldDescription, CalculationResult result)
         {
             return "";
+        }
+
+        private string GetKeyValuesFromComment(string comment, string requestedKey, string nextKey)
+        {
+            var key1Index = comment.IndexOf(requestedKey);
+            var key2Index = comment.IndexOf(nextKey);
+            return comment.Substring(key1Index, key2Index - key1Index).Trim();
         }
 
         class CalculationResult

@@ -58,7 +58,7 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
 
         private int GetStartMoney(string description)
         {
-            var startMoney = description.Split("---")[0].Split("-")[1].Trim();
+            string startMoney = GetKeyValueFromText(description, "Start MONEY - ", "---").Replace(" ", "");
             int.TryParse(startMoney, out int result);
             return result;
         }
@@ -81,7 +81,7 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
 
         private Tuple<int, int> GetTasks(string comment)
         {
-            var tasks = GetKeyValuesFromComment(comment, "- Done tasks -", "- Pomodoros -").Split("/");
+            var tasks = GetKeyValueFromText(comment, "- Done tasks -", "- Pomodoros -").Split("/");
             int.TryParse(tasks[0], out int tasksDone);
             int.TryParse(tasks[1], out int tasksCount);
 
@@ -90,7 +90,7 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
         
         private Tuple<int, int> GetPomodoros(string comment)
         {
-            var pomodoros = GetKeyValuesFromComment(comment, "- Pomodoros -", "- Hours -").Split("/");
+            var pomodoros = GetKeyValueFromText(comment, "- Pomodoros -", "- Hours -").Split("/");
             int.TryParse(pomodoros[0], out int pomodorosDone);
             int.TryParse(pomodoros[1], out int pomodorosCount);
 
@@ -99,7 +99,7 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
 
         private int GetMoney(string comment)
         {
-            var money = GetKeyValuesFromComment(comment, "- Money spent -", "- Finished at -");
+            var money = GetKeyValueFromText(comment, "- Money spent -", "- Finished at (planned)");
             int.TryParse(money, out int result);
 
             return result;
@@ -107,12 +107,14 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
 
         private CalculationResult GetAllHours(string comment)
         {
-            string totalHours = GetKeyValuesFromComment(comment, "- Screen time -", "- Messengers");
-            string messengers = GetKeyValuesFromComment(comment, "- Messengers `-`", "- Browser `-`");
-            string browser = GetKeyValuesFromComment(comment, "- Browser `-`", "- Youtube `-`");
-            string youtube = GetKeyValuesFromComment(comment, "- Youtube `-`", "- Job `-`");
-            string job = GetKeyValuesFromComment(comment, "- Job `-`", "- Money spent -");
-            string endTime = GetKeyValuesFromComment(comment, "- Finished at -", "- **Комментарий**");
+            //2h 50m
+            string screenTime = GetKeyValueFromText(comment, "- Screen time -", "- Messengers");
+            string messengers = GetKeyValueFromText(comment, "- Messengers `-`", "- Browser");
+            string browser = GetKeyValueFromText(comment, "- Browser `-`", "- Youtube");
+            string youtube = GetKeyValueFromText(comment, "- Youtube `-`", "- Job");
+            string job = GetKeyValueFromText(comment, "- Job `-`", "- Money spent");
+            string endTimePlanned = GetKeyValueFromText(comment, "- Finished at (planned) -", "- Finished at");
+            string endTime = GetKeyValueFromText(comment, "- Finished at -", "- **Комментарий**");
 
             var result = new CalculationResult();
             //Some processing. Todo: make global constants instead of "key word"
@@ -124,11 +126,14 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
             return "";
         }
 
-        private string GetKeyValuesFromComment(string comment, string requestedKey, string nextKey)
+        private string GetKeyValueFromText(string text, string requestedKey, string nextKey)
         {
-            var key1Index = comment.IndexOf(requestedKey);
-            var key2Index = comment.IndexOf(nextKey);
-            return comment.Substring(key1Index, key2Index - key1Index).Trim();
+            text = text.ToLower();
+            requestedKey = requestedKey.ToLower();
+            nextKey = nextKey.ToLower();
+            var key1Index = text.IndexOf(requestedKey);
+            var key2Index = text.IndexOf(nextKey);
+            return text.Substring(key1Index, key2Index - key1Index).Trim();
         }
 
         class CalculationResult

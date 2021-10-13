@@ -107,7 +107,6 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
 
         private CalculationResult GetAllHours(string comment)
         {
-            //2h 50m
             string screenTime = GetKeyValueFromText(comment, "- Screen time -", "- Messengers");
             string messengers = GetKeyValueFromText(comment, "- Messengers `-`", "- Browser");
             string browser = GetKeyValueFromText(comment, "- Browser `-`", "- Youtube");
@@ -117,7 +116,17 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
             string endTime = GetKeyValueFromText(comment, "- Finished at -", "- **Комментарий**");
 
             var result = new CalculationResult();
-            //Some processing. Todo: make global constants instead of "key word"
+
+            //2h 50m. todo: change Time in trello to TimeSpanFormat
+            result.ScreenTime = TimeSpan.Parse(screenTime);
+            result.Messengers = TimeSpan.Parse(messengers);
+            result.Browsers = TimeSpan.Parse(browser);
+            result.Youtube = TimeSpan.Parse(youtube);
+            result.Jobs = TimeSpan.Parse(job);
+            result.EndTimePlanned = TimeSpan.Parse(endTimePlanned);
+            result.EndTime = TimeSpan.Parse(endTime);
+            
+            //todo: make global constants instead of "key word"
             return result;
         }
         
@@ -149,8 +158,9 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
             public TimeSpan Browsers { get; set; }
             public TimeSpan Youtube { get; set; }
             public TimeSpan Jobs { get; set; }
-            public TimeSpan TotalHours { get; set; }
-            public TimeSpan EndHour { get; set; }
+            public TimeSpan ScreenTime { get; set; }
+            public TimeSpan EndTimePlanned { get; set; }
+            public TimeSpan EndTime { get; set; }
 
             internal void AddHours(CalculationResult phoneHours)
             {
@@ -158,7 +168,7 @@ namespace TrelloAutomation.API.Services.AuxTrelloServices.Card.CardStrategy
                 Browsers += phoneHours.Browsers;
                 Youtube += phoneHours.Youtube;
                 Jobs += phoneHours.Jobs;
-                TotalHours += phoneHours.TotalHours;
+                ScreenTime += phoneHours.ScreenTime;
             }
         }
     }
